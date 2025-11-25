@@ -4,7 +4,8 @@ const {
   getAllDoctors,
   getDoctor,
   updateDoctor,
-  deleteDoctor
+  deleteDoctor,
+  getDoctorsCount
 } = require('../controllers/doctorController');
 
 const router = express.Router();
@@ -15,6 +16,9 @@ router.post('/', createDoctor);
 // GET /api/doctors - Get all doctors
 router.get('/', getAllDoctors);
 
+router.get('/count', getDoctorsCount);
+
+
 // GET /api/doctors/:id - Get single doctor
 router.get('/:id', getDoctor);
 
@@ -23,5 +27,6 @@ router.put('/:id', updateDoctor);
 
 // DELETE /api/doctors/:id - Delete doctor
 router.delete('/:id', deleteDoctor);
+
 
 module.exports = router;

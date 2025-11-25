@@ -6,13 +6,16 @@ const {
   updatePayment,
   deletePayment,
   getDoctorPayments,
-  getPendingPayments
+  getPendingPayments,
+  getPaymentsSummary
 } = require('../controllers/paymentController');
 
 const router = express.Router();
 
 router.post('/', createPayment);
 router.get('/', getAllPayments);
+router.get('/summary', getPaymentsSummary);
+
 router.get('/:id', getPaymentById);
 router.put('/:id', updatePayment);
 router.delete('/:id', deletePayment);

@@ -73,3 +73,20 @@ exports.deleteDoctor = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+
+
+
+
+exports.getDoctorsCount = async (req, res) => {
+  try {
+    console.log('🟢 getDoctorsCount function called');
+    console.log('🟢 Doctor model:', Doctor);
+    const count = await Doctor.countDocuments();
+    console.log('🟢 Doctors count from DB:', count);
+    res.json({ count });
+  } catch (error) {
+    console.error('🔴 Error in getDoctorsCount:', error);
+    res.status(500).json({ error: error.message });
+  }
+};

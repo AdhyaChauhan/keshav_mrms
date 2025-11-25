@@ -92,3 +92,38 @@ exports.getPendingPayments = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch pending payments' });
   }
 };
+
+
+
+
+exports.getPaymentsSummary = async (req, res) => {
+  try {
+    console.log('🟢 getPaymentsSummary function called');
+    console.log('🟢 Payment model:', Payment); // Check if Payment is defined
+    const totalPayments = await Payment.countDocuments();
+    console.log('🟢 Total payments:', totalPayments);
+    
+    const pendingPayments = await Payment.countDocuments({ status: 'Pending' });
+    const collectedPayments = await Payment.countDocuments({ status: 'Paid' });
+    
+    console.log('🟢 Payment counts:', { pendingPayments, collectedPayments });
+    
+    const revenueResult = await Payment.aggregate([
+      { $match: { status: 'Paid' } },
+      { $group: { _id: null, total: { $sum: '$amount' } } }
+    ]);
+    
+    const totalRevenue = revenueResult[0]?.total || 0;
+    console.log('🟢 Total revenue:', totalRevenue);
+
+    res.json({
+      totalPayments,
+      pendingPayments, 
+      collectedPayments,
+      totalRevenue
+    });
+  } catch (error) {
+    console.error('🔴 Error in getPaymentsSummary:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
