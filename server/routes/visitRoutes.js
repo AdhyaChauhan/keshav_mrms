@@ -1,16 +1,18 @@
-const express = require('express');
-const {
+import express from "express";
+import {
+  getVisits,
+  getVisitById,
   createVisit,
-  getDoctorVisits,
   updateVisit,
   deleteVisit
-} = require('../controllers/visitController');
+} from "../controllers/visitController.js";
 
 const router = express.Router();
 
-router.post('/', createVisit);
-router.get('/doctor/:doctorId', getDoctorVisits);
-router.put('/:id', updateVisit);
-router.delete('/:id', deleteVisit);
+router.get("/", getVisits);
+router.get("/:id", getVisitById);
+router.post("/", createVisit);
+router.put("/:id", updateVisit);
+router.delete("/:id", deleteVisit);
 
-module.exports = router;
+export default router;
